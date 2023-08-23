@@ -25,8 +25,8 @@ class Index {
   }
 
   static async setUpDatabase() {
-    const client = new mongodb.MongoClient(process.env.MOVIEREVIEWS_DB_URI);
-    const port = process.env.PORT || 8080;
+    const client = new mongodb.MongoClient(process.env.BOOKREVIEWS_DB_URI);
+    const port = process.env.PORT || 3000;
     try {
       await client.connect();
       Index.app.listen(port, () => {
