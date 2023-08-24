@@ -7,7 +7,7 @@ export default class BooksDAO {
         } 
         try {
             BooksDAO.books = await conn.db(process.env.BOOKREVIEWS_NS)
-             .collection('book-list-connection');
+             .collection('books');
         } catch (e) {
             console.error('unable to connect in BooksDAO: ${e}');
         }
