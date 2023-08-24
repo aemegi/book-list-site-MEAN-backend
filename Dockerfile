@@ -1,6 +1,6 @@
 # Filename: Dockerfile
 FROM node:18-alpine
-WORKDIR /usr/src/app
+WORKDIR /
 COPY package*.json ./
 RUN npm install
 COPY . .
