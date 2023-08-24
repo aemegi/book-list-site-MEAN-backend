@@ -3,6 +3,7 @@ import cors from 'cors';
 import BooksRoute from './api/BooksRoute.js';
 import dotenv from 'dotenv';
 import mongodb from 'mongodb';
+import BooksDAO from './dao/BooksDAO.js';
 
 class Index {
   static app = express();
@@ -29,6 +30,7 @@ class Index {
     const port = process.env.PORT || 3000;
     try {
       await client.connect();
+      await BooksDAO.injectDB(client);
       Index.app.listen(port, () => {
         console.log('server is running on port: ${port}');
       });

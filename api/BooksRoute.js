@@ -1,6 +1,8 @@
+import BooksController from "./BooksController";
+
 export default class BooksRoute {
   static configRoutes(router) {
-      router.route('/').get((req, res) => res.send('hello world'));
+      router.route('/').get(BooksController.apiGetBooks);
       return router;
   }
 
