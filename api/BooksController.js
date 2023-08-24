@@ -25,6 +25,31 @@ export default class BooksController {
             totalresults: totalNumBooks,
         };
         res.json(response);
-
     }
+
+    static async apiGetBookById(req, res, next) {
+        try {
+            const id = req.params.id || {};
+            const book = await BooksDAO.getBookById(id);
+            if (!book) {
+                res.status(404).json({ error: 'not found' });
+                return;
+            }
+            res.json(book);
+        } catch  (e) {
+            console.log('api, ${e}');
+            res.status(500).json({ error: e });
+        }
+    }
+
+    static async apiGetGenres(req, res, next) {
+        try {
+            const propertyTypes = await BooksDAO.apiGetGenres();
+            res.json(propertyTypes);
+        } catch (e) {
+            console.log('api, ${e}');
+            res.status(500).json({ error: e });
+        }
+    }
+
 }

@@ -1,6 +1,10 @@
+import mongodb from 'mongodb';
+
 export default class BooksDAO {
     static books;
 
+    static ObjectId = mongodb.ObjectId;
+/* */
     static async injectDB(conn) {
         if (BooksDAO.books) {
             return;
@@ -12,7 +16,7 @@ export default class BooksDAO {
             console.error('unable to connect in BooksDAO: ${e}');
         }
     }
-
+    /*****************************************************/
     static async getBooks({
         filters = null,
         page = 0,
@@ -23,7 +27,7 @@ export default class BooksDAO {
             if ('title' in filters) {
                 query = { $text: { search: filters.title } };
             } else if ('genre' in filters) {
-                query = { genre: { $eq: filters.genre }};
+                query = { genres: { $eq: filters.genres }};
             }
         }
         let cursor;
@@ -41,5 +45,40 @@ export default class BooksDAO {
             return { booksList: [], totalNumBooks: 0 };
         }
     }
-    
+    /************************************************* */
+    static async getGenres() {
+        let genres = [];
+        try {
+            genres = await BooksDAO.books.distinct('genre');
+            return genres;
+        } catch (e) {
+            console.error('unable to get genres, ${e}');
+            return genres;
+        }
+    }
+    /************************************************ */
+    static async getBookByID(id) {
+        try {
+            return await BooksDAO.books.aggregate([
+                {
+                    $match: {
+                        _id: new BooksDAO.ObjectId(id),
+                    },
+                },
+                {
+                    $lookup:
+                        {
+                        from: 'reviews',
+                        localField: '_id',
+                        foreignField: 'book_id',
+                        as: 'reviews',
+                        },
+                },
+            ]).next();
+        } catch (e) {
+            console.error('something went wrong in getBooksById: ${e}');
+            throw e;
+        }
+    }
+   /* */
 }

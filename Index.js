@@ -20,7 +20,7 @@ class Index {
   static setUpServer() {
     Index.app.use(cors());
     Index.app.use(express.json());
-    Index.app.use('/api/v1/books-site', BooksRoute.configRoutes(Index.router));
+    Index.app.use('/api/v1/books', BooksRoute.configRoutes(Index.router));
     Index.app.use('*', (req, res) => {
       res.status(404).json({ error: 'not found' });
     });
