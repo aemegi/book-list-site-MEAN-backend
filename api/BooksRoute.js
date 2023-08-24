@@ -1,4 +1,4 @@
-import BooksController from "./BooksController";
+import BooksController from "./BooksController.js";
 
 export default class BooksRoute {
   static configRoutes(router) {

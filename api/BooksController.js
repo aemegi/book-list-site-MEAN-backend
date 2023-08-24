@@ -1,4 +1,4 @@
-import BooksDAO from "../dao/BooksDAO";
+import BooksDAO from "../dao/BooksDAO.js";
 
 export default class BooksController {
     static async apiGetBooks(req, res, next) {
