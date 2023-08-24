@@ -49,7 +49,7 @@ export default class BooksDAO {
     static async getGenres() {
         let genres = [];
         try {
-            genres = await BooksDAO.books.distinct('genre');
+            genres = await BooksDAO.books.distinct('genres');
             return genres;
         } catch (e) {
             console.error('unable to get genres, ${e}');
