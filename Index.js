@@ -4,6 +4,7 @@ import BooksRoute from './api/BooksRoute.js';
 import dotenv from 'dotenv';
 import mongodb from 'mongodb';
 import BooksDAO from './dao/BooksDAO.js';
+import ReviewsDAO from './dao/ReviewsDAO.js';
 
 class Index {
   static app = express();
@@ -31,6 +32,7 @@ class Index {
     try {
       await client.connect();
       await BooksDAO.injectDB(client);
+      await ReviewsDAO.injectDB(client);
       Index.app.listen(port, () => {
         console.log('server is running on port: ${port}');
       });
